@@ -12,7 +12,13 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(ApiClient::class, function ($app) {
+            return new ApiClient(
+                config('services.api.client_id'),
+                config('services.api.api_key'),
+                config('services.api.base_url')
+            );
+        });
     }
 
     /**
@@ -20,6 +26,5 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::view('/', 'welcome');
     }
 }

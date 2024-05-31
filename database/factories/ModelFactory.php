@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace Kcompany\CoventusGateway\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
