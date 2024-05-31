@@ -5,6 +5,7 @@ namespace Kcompany\Resources\Booking;
 class Organization
 {
     private $id;
+
     private $name;
 
     public function __construct($data)

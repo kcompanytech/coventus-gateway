@@ -2,8 +2,8 @@
 
 namespace Kcompany\Service;
 
-use Kcompany\Services\CurlService;
 use Kcompany\Resources\Booking\EventBookingResponse;
+use Kcompany\Services\CurlService;
 
 class ClientService
 {
@@ -18,7 +18,7 @@ class ClientService
     {
         $endpoint = "publicBooking/api/bookings/$userId";
         $response = $this->curlService->get($endpoint);
+
         return new EventBookingResponse($response);
     }
-
 }

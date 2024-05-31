@@ -5,9 +5,13 @@ namespace Kcompany\Resources\Booking;
 class Resource
 {
     private $id;
+
     private $organization;
+
     private $name;
+
     private $bookingCategoryRequired;
+
     private $resourceGroup;
 
     public function __construct($data)

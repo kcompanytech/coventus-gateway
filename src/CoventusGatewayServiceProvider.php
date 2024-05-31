@@ -2,9 +2,9 @@
 
 namespace Kcompany\CoventusGateway;
 
+use Kcompany\CoventusGateway\Commands\CoventusGatewayCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Kcompany\CoventusGateway\Commands\CoventusGatewayCommand;
 
 class CoventusGatewayServiceProvider extends PackageServiceProvider
 {
