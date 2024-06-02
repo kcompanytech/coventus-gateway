@@ -5,7 +5,9 @@ namespace Kcompany\CoventusGateway\Services;
 class CurlService
 {
     private $baseUrl;
+
     private $clientId;
+
     private $apiKey;
 
     public function __construct()
@@ -28,7 +30,7 @@ class CurlService
         $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
         if (!empty($params)) {
             $queryString = http_build_query($params);
-            $url .= '?' . $queryString;
+            $url .= '?'.$queryString;
         }
 
         return $url;
@@ -47,20 +49,20 @@ class CurlService
                 }
                 break;
             case 'PUT':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
                 if ($data) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 }
                 break;
             case 'DELETE':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 if ($data) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 }
                 break;
             default:
                 if ($data) {
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
+                    $url = sprintf('%s?%s', $url, http_build_query($data));
                 }
         }
 
@@ -71,7 +73,7 @@ class CurlService
         $result = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            return 'Error:' . curl_error($ch);
+            return 'Error:'.curl_error($ch);
         }
 
         curl_close($ch);

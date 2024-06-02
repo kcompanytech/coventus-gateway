@@ -3,8 +3,8 @@
 namespace Kcompany\CoventusGateway\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Kcompany\CoventusGateway\CoventusGatewayServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
