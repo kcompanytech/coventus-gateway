@@ -6,6 +6,6 @@ class CategoryService extends BaseClientService
 {
     public function getCategories()
     {
-        return $this->curlService->get("publicBooking/api/categories");
+        return $this->curlService->get('publicBooking/api/categories');
     }
 }

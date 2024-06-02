@@ -2,8 +2,6 @@
 
 namespace Kcompany\CoventusGateway\Services;
 
-use Kcompany\CoventusGateway\Services\CurlService;
-
 abstract class BaseClientService
 {
     protected $curlService;

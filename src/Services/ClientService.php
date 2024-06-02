@@ -2,12 +2,10 @@
 
 namespace Kcompany\CoventusGateway\Services;
 
-use Kcompany\CoventusGateway\Services\BookingService;
-use Kcompany\CoventusGateway\Services\CategoryService;
-
 class ClientService
 {
     private $bookingService;
+
     private $categoryService;
 
     public function __construct(BookingService $bookingService, CategoryService $categoryService)

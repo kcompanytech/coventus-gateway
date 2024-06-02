@@ -3,10 +3,10 @@
 namespace Workbench\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Kcompany\CoventusGateway\Services\CurlService;
-use Kcompany\CoventusGateway\Services\ClientService;
 use Kcompany\CoventusGateway\Services\BookingService;
 use Kcompany\CoventusGateway\Services\CategoryService;
+use Kcompany\CoventusGateway\Services\ClientService;
+use Kcompany\CoventusGateway\Services\CurlService;
 
 class WorkbenchServiceProvider extends ServiceProvider
 {
