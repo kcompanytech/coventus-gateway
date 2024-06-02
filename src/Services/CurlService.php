@@ -1,6 +1,6 @@
 <?php
 
-namespace Kcompany\Services;
+namespace Kcompany\CoventusGateway\Services;
 
 class CurlService
 {
@@ -8,20 +8,29 @@ class CurlService
     private $clientId;
     private $apiKey;
 
-    public function __construct($baseUrl, $clientId, $apiKey)
+    public function __construct()
     {
-        $this->baseUrl = rtrim($baseUrl, '/'); // Ensure no trailing slash
-        $this->clientId = $clientId;
-        $this->apiKey = $apiKey;
+        $this->baseUrl = rtrim(config('coventus-gateway.coventus.base_url'), '/'); // Ensure no trailing slash
+        $this->clientId = config('coventus-gateway.coventus.client_id');
+        $this->apiKey = config('coventus-gateway.coventus.api_key');
     }
 
     private function buildUrl($endpoint, $params = [])
     {
+        // Default parameters to include in every request
+        $defaultParams = [
+            'key' => $this->apiKey,
+            'organization' => $this->clientId
+        ];
+
+        $params = array_merge($defaultParams, $params);
+
         $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
         if (!empty($params)) {
             $queryString = http_build_query($params);
             $url .= '?' . $queryString;
         }
+
         return $url;
     }
 
@@ -55,14 +64,8 @@ class CurlService
                 }
         }
 
-        $headers = [
-            'Content-Type: application/json',
-            'Client-ID: ' . $this->clientId,
-            'API-Key: ' . $this->apiKey,
-        ];
-
+        // Set cURL options
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($ch);

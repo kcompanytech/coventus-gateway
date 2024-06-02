@@ -17,8 +17,6 @@ class CoventusGatewayServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('coventus-gateway')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasCommand(CoventusGatewayCommand::class);
+            ->hasConfigFile();
     }
 }

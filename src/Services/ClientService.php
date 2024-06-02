@@ -1,24 +1,28 @@
 <?php
 
-namespace Kcompany\Service;
+namespace Kcompany\CoventusGateway\Services;
 
-use Kcompany\Services\CurlService;
-use Kcompany\Resources\Booking\EventBookingResponse;
+use Kcompany\CoventusGateway\Services\BookingService;
+use Kcompany\CoventusGateway\Services\CategoryService;
 
 class ClientService
 {
-    private $curlService;
+    private $bookingService;
+    private $categoryService;
 
-    public function __construct($baseUrl, $clientId, $apiKey)
+    public function __construct(BookingService $bookingService, CategoryService $categoryService)
     {
-        $this->curlService = new CurlService($baseUrl, $clientId, $apiKey);
+        $this->bookingService = $bookingService;
+        $this->categoryService = $categoryService;
     }
 
-    public function getBookings($userId)
+    public function getBookingService()
     {
-        $endpoint = "publicBooking/api/bookings/$userId";
-        $response = $this->curlService->get($endpoint);
-        return new EventBookingResponse($response);
+        return $this->bookingService;
     }
 
+    public function getCategoryService()
+    {
+        return $this->categoryService;
+    }
 }
