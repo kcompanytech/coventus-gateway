@@ -22,13 +22,13 @@ class CurlService
         // Default parameters to include in every request
         $defaultParams = [
             'key' => $this->apiKey,
-            'organization' => $this->clientId
+            'organization' => $this->clientId,
         ];
 
         $params = array_merge($defaultParams, $params);
 
-        $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
-        if (!empty($params)) {
+        $url = $this->baseUrl.'/'.ltrim($endpoint, '/');
+        if (! empty($params)) {
             $queryString = http_build_query($params);
             $url .= '?'.$queryString;
         }

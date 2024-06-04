@@ -2,7 +2,6 @@
 
 namespace Kcompany\CoventusGateway;
 
-use Kcompany\CoventusGateway\Commands\CoventusGatewayCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
