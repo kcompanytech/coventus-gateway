@@ -7,6 +7,12 @@ use Kcompany\CoventusGateway\Services\CurlService;
 use Kcompany\CoventusGateway\Services\ClientService;
 use Kcompany\CoventusGateway\Services\BookingService;
 use Kcompany\CoventusGateway\Services\CategoryService;
+use Kcompany\CoventusGateway\Services\DepartmentService;
+use Kcompany\CoventusGateway\Services\FinansService;
+use Kcompany\CoventusGateway\Services\GroupService;
+use Kcompany\CoventusGateway\Services\LoginService;
+use Kcompany\CoventusGateway\Services\MemberService;
+use Kcompany\CoventusGateway\Services\ResourceService;
 
 class WorkbenchServiceProvider extends ServiceProvider
 {
@@ -32,10 +38,40 @@ class WorkbenchServiceProvider extends ServiceProvider
             return new CategoryService($app->make(CurlService::class));
         });
 
+        $this->app->singleton(DepartmentService::class, function ($app) {
+            return new DepartmentService($app->make(CurlService::class));
+        });
+
+        $this->app->singleton(FinansService::class, function ($app) {
+            return new FinansService($app->make(CurlService::class));
+        });
+
+        $this->app->singleton(GroupService::class, function ($app) {
+            return new GroupService($app->make(CurlService::class));
+        });
+
+        $this->app->singleton(LoginService::class, function ($app) {
+            return new LoginService($app->make(CurlService::class));
+        });
+
+        $this->app->singleton(MemberService::class, function ($app) {
+            return new MemberService($app->make(CurlService::class));
+        });
+
+        $this->app->singleton(ResourceService::class, function ($app) {
+            return new ResourceService($app->make(CurlService::class));
+        });
+
         $this->app->singleton(ClientService::class, function ($app) {
             return new ClientService(
                 $app->make(BookingService::class),
-                $app->make(CategoryService::class)
+                $app->make(CategoryService::class),
+                $app->make(DepartmentService::class),
+                $app->make(FinansService::class),
+                $app->make(GroupService::class),
+                $app->make(LoginService::class),
+                $app->make(MemberService::class),
+                $app->make(ResourceService::class)
             );
         });
     }
