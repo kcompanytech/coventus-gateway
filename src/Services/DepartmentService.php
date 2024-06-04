@@ -13,13 +13,11 @@ class DepartmentService extends BaseClientService
     {
         $data = [];
 
-        if(is_bool($offentlig)) 
-        {
+        if (is_bool($offentlig)) {
             $data = array_merge(['offentlig' => $offentlig]);
         }
 
-        if(isset($ids))
-        {
+        if (isset($ids)) {
             $ids = implode(';', $ids);
 
             $data = array_merge(['ider' => $ids], $data);
