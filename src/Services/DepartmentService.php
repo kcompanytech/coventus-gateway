@@ -9,17 +9,15 @@ class DepartmentService extends BaseClientService
         return $this->curlService->get('dataudv/api/adressebog/get_afdeling.php', intval($id));
     }
 
-    public function getDepartments(array $ids = [], ?bool $public)
+    public function getDepartments(array $ids, ?bool $public)
     {
         $data = [];
 
-        if(is_bool($public)) 
-        {
+        if (is_bool($public)) {
             $data['offentlig'] = $public;
         }
 
-        if(isset($ids))
-        {
+        if (isset($ids)) {
             $ids = implode(';', $ids);
 
             $data['ider'] = $ids;
