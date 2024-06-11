@@ -2,76 +2,129 @@
 
 namespace Kcompany\CoventusGateway\Services;
 
-use Types;
 use InvalidArgumentException;
+use Kcompany\CoventusGateway\Services\HelperTrait;
 
 class GroupService extends BaseClientService
 {
-    public function getGroup(int $id)
+    use HelperTrait;
+    
+    /**
+     * getGroup
+     *
+     * @param  int $id
+     * @return array
+     */
+    public function getGroup(int $id): array|string|null
     {
         if (!isset($id)) throw new InvalidArgumentException("Missing id");
 
-        return $this->curlService->get('dataudv/api/adressebog/get_gruppe.php', intval($id));
+        return $this->curlService->get('dataudv/api/adressebog/get_gruppe.php', ['id' => $id]);
     }
-
-    public function getGroups(?array $ids = [], ?int $departmentId, ?string $type, ?array $activities = [], ?bool $public, ?bool $showMemberlist, ?bool $onlineBooking, bool $active = true)
+    
+    /**
+     * getGroups
+     *
+     * @param  array $ids
+     * @param  int $departmentId
+     * @param  string $type
+     * @param  array $activities
+     * @param  bool $public
+     * @param  bool $showMemberlist
+     * @param  bool $onlineBooking
+     * @param  bool $active
+     * @return array
+     */
+    public function getGroups(array $ids = [], int $departmentId, string $type, array $activities = [], bool $public = false, bool $showMemberlist = false, bool $onlineBooking = false, bool $active = true): array|string|null
     {
-        $data = [];
+        $params = [];
 
-        if (isset($ids)) {
-            $ids = implode(',', $ids);
-            $data['ider'] = $ids;
+        if (!isset($ids)) {
+            throw new InvalidArgumentException('Missing array of ids');
         }
 
-        if(isset($departmentId)) $data['afdeling'] = $departmentId;
+        $ids = implode(',', $ids);
+        $params['ider'] = $ids;
+
+        if(isset($departmentId)) $params['afdeling'] = $departmentId;
 
         if(isset($type)) {
-            if($type != 'hold' || $type != 'udvalg')
-            {
+            // The list of accepted types
+            $acceptedTypes = ['hold', 'udvalg'];
+
+            // Check if $type is not in the accepted types
+            if (!in_array($type, $acceptedTypes, true)) {
                 throw new InvalidArgumentException('Only "hold" or "udvalg" is accepted');
             }
-            $type = $this->types($type);
+            $params['type'] = $type;
+            
         }
 
         if(isset($activities)) {
             $activities = implode(',', $activities);
-            $data['aktiviteter'] = $activities;
+            $params['aktiviteter'] = $activities;
         }
 
-        if(isset($public)) $data['offentlig'] = $public;
+        $params['offentlig'] = $public;
         
-        if(isset($showMemberlist)) $data['vis_medlemsliste'] = $showMemberlist;
+        $params['vis_medlemsliste'] = $showMemberlist;
 
-        if(isset($onlineBooking)) $data['online_tilmelding'] = $onlineBooking;
+        $params['online_tilmelding'] = $onlineBooking;
 
-        if(!$active) $data['aktiv'] = $active;
+        $params['aktiv'] = $active;
 
-        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php', $data);
+        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php', $params);
     }
-
-    public function getGroupsTimeAndPlace(array $ids = [])
+    
+    /**
+     * getGroupsTimeAndPlace
+     *
+     * @param  array $ids
+     * @return array
+     */
+    public function getGroupsTimeAndPlace(array $ids = []): array|string|null
     {
         if (!isset($ids)) throw new InvalidArgumentException("Missing a list of groups");
         $ids = implode(',', $ids);
 
         return $this->curlService->get('dataudv/api/adressebog/get_tid_sted.php', ['grupper' => $ids]);
     }
-
-    public function getGroupsMember()
+    
+    /**
+     * getGroupsMember
+     *
+     * @param  array $ids
+     * @param  string $type
+     * @param  bool $confirmation
+     * @param  bool $deleted
+     * @param  bool $extraFields
+     * @return array
+     */
+    public function getGroupsMember(array $ids = [], string $type, bool $confirmation = false, bool $deleted = false, bool $extraFields = false): array|string|null
     {
-        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php');
-    }
+        $params = [];
 
-    private function types(Types|string  $type)
-    {
-        if (is_string($type)) {
-            $type = ucfirst(strtolower($type)); // Normalize the string
-            $type = Types::from($type);
+        if (!isset($ids)) throw new InvalidArgumentException("Missing a list of groups");
+        $params['ider'] = implode(',', $ids);   
+
+        if(isset($type)) {
+            // The list of accepted types
+            $acceptedTypes = ['person', 'medlem', 'virksomhed'];
+
+            // Check if $type is not in the accepted types
+            if (!in_array($type, $acceptedTypes, true)) {
+                throw new InvalidArgumentException('Only "person", "medlem", or "virksomhed" is accepted');
+            }
+            $params['type'] = $type;
+            
         }
 
-        return match ($type) {
-            Types::Hold => 'hold',
-            Types::Udvalg => 'udvalg'
-        };
+        $params['Mangler_bekraeftelse'] = $confirmation;
+
+        $params['slettet'] = $deleted;
+
+        $params['ekstra_felter'] = $extraFields;
+
+        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php', $params);
     }
 }

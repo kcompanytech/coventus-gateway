@@ -3,28 +3,41 @@
 namespace Kcompany\CoventusGateway\Services;
 
 class DepartmentService extends BaseClientService
-{
-    public function getDepartment(int $id)
+{    
+    /**
+     * getDepartment
+     *
+     * @param  int $id
+     * @return array
+     */
+    public function getDepartment(int $id): array|string|null
     {
-        return $this->curlService->get('dataudv/api/adressebog/get_afdeling.php', intval($id));
+        return $this->curlService->get('dataudv/api/adressebog/get_afdeling.php', ['id' => $id]);
     }
-
-    public function getDepartments(array $ids = [], ?bool $public)
+    
+    /**
+     * getDepartments
+     *
+     * @param  array $ids
+     * @param  bool $public
+     * @return array
+     */
+    public function getDepartments(array $ids = [], bool $public = false): array|string|null
     {
-        $data = [];
+        $params = [];
 
         if(is_bool($public)) 
         {
-            $data['offentlig'] = $public;
+            $params['offentlig'] = $public;
         }
 
         if(isset($ids))
         {
             $ids = implode(';', $ids);
 
-            $data['ider'] = $ids;
+            $params['ider'] = $ids;
         }
 
-        return $this->curlService->get('dataudv/api/adressebog/get_afdelinger.php', $data);
+        return $this->curlService->get('dataudv/api/adressebog/get_afdelinger.php', $params);
     }
 }

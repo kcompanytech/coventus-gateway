@@ -6,7 +6,13 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class CoventusGatewayServiceProvider extends PackageServiceProvider
-{
+{    
+    /**
+     * configurePackage
+     *
+     * @param  Package $package
+     * @return void
+     */
     public function configurePackage(Package $package): void
     {
         /*

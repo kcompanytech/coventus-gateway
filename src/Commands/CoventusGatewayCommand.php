@@ -8,8 +8,13 @@ class CoventusGatewayCommand extends Command
 {
     public $signature = 'coventus-gateway';
 
-    public $description = 'My command';
-
+    public $description = 'Test command';
+    
+    /**
+     * handle
+     *
+     * @return int
+     */
     public function handle(): int
     {
         $this->comment('All done');
