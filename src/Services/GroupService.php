@@ -17,7 +17,9 @@ class GroupService extends BaseClientService
      */
     public function getGroup(int $id): array|string|null
     {
-        if (!isset($id)) throw new InvalidArgumentException("Missing id");
+        if (! isset($id)) {
+            throw new InvalidArgumentException('Missing id');
+        }
 
         return $this->curlService->get('dataudv/api/adressebog/get_gruppe.php', ['id' => $id]);
     }
@@ -60,7 +62,7 @@ class GroupService extends BaseClientService
             
         }
 
-        if(isset($activities)) {
+        if (isset($activities)) {
             $activities = implode(',', $activities);
             $params['aktiviteter'] = $activities;
         }
@@ -84,7 +86,9 @@ class GroupService extends BaseClientService
      */
     public function getGroupsTimeAndPlace(array $ids = []): array|string|null
     {
-        if (!isset($ids)) throw new InvalidArgumentException("Missing a list of groups");
+        if (! isset($ids)) {
+            throw new InvalidArgumentException('Missing a list of groups');
+        }
         $ids = implode(',', $ids);
 
         return $this->curlService->get('dataudv/api/adressebog/get_tid_sted.php', ['grupper' => $ids]);

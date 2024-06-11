@@ -62,15 +62,14 @@ class ClientService
     public function __construct(
         BookingService $bookingService,
         CategoryService $categoryService,
-        DepartmentService $departmentService,        
+        DepartmentService $departmentService,
         FinansService $finansService,
         GroupService $groupService,
         LoginService $loginService,
         MemberService $memberService,
         OrganizationService $organizationService,
         ResourceService $resourceService,
-        )
-    {
+    ) {
         $this->bookingService = $bookingService;
         $this->categoryService = $categoryService;
         $this->departmentService = $departmentService;

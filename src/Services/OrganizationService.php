@@ -13,7 +13,7 @@ class OrganizationService extends BaseClientService
      */
     public function getOrganizations(): array|string|null
     {
-        return $this->curlService->get("dataudv/api/adressebog/get_organisationer.php");
+        return $this->curlService->get('dataudv/api/adressebog/get_organisationer.php');
     }
     
     /**

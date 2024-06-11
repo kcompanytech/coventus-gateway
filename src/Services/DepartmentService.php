@@ -31,8 +31,7 @@ class DepartmentService extends BaseClientService
             $params['offentlig'] = $public;
         }
 
-        if(isset($ids))
-        {
+        if (isset($ids)) {
             $ids = implode(';', $ids);
 
             $params['ider'] = $ids;
