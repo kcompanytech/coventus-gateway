@@ -5,11 +5,14 @@ namespace Workbench\App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Kcompany\CoventusGateway\Services\BookingService;
 use Kcompany\CoventusGateway\Services\CategoryService;
+use Kcompany\CoventusGateway\Services\ClientService;
+use Kcompany\CoventusGateway\Services\CurlService;
 use Kcompany\CoventusGateway\Services\DepartmentService;
 use Kcompany\CoventusGateway\Services\FinansService;
 use Kcompany\CoventusGateway\Services\GroupService;
 use Kcompany\CoventusGateway\Services\LoginService;
 use Kcompany\CoventusGateway\Services\MemberService;
+use Kcompany\CoventusGateway\Services\OrganizationService;
 use Kcompany\CoventusGateway\Services\ResourceService;
 
 class WorkbenchServiceProvider extends ServiceProvider
@@ -56,6 +59,10 @@ class WorkbenchServiceProvider extends ServiceProvider
             return new MemberService($app->make(CurlService::class));
         });
 
+        $this->app->singleton(OrganizationService::class, function ($app) {
+            return new OrganizationService($app->make(CurlService::class));
+        });
+
         $this->app->singleton(ResourceService::class, function ($app) {
             return new ResourceService($app->make(CurlService::class));
         });
@@ -69,6 +76,7 @@ class WorkbenchServiceProvider extends ServiceProvider
                 $app->make(GroupService::class),
                 $app->make(LoginService::class),
                 $app->make(MemberService::class),
+                $app->make(OrganizationService::class),
                 $app->make(ResourceService::class)
             );
         });

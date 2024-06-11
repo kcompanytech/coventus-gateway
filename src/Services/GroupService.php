@@ -2,25 +2,121 @@
 
 namespace Kcompany\CoventusGateway\Services;
 
+use InvalidArgumentException;
+
 class GroupService extends BaseClientService
 {
-    public function getGroup()
+    use HelperTrait;
+
+    /**
+     * getGroup
+     *
+     * @return array
+     */
+    public function getGroup(int $id): array|string|null
     {
-        return $this->curlService->get('');
+        if (! isset($id)) {
+            throw new InvalidArgumentException('Missing id');
+        }
+
+        return $this->curlService->get('dataudv/api/adressebog/get_gruppe.php', ['id' => $id]);
     }
 
-    public function getGroups()
+    /**
+     * getGroups
+     *
+     * @return array
+     */
+    public function getGroups(array $ids, int $departmentId, string $type, array $activities = [], bool $public = false, bool $showMemberlist = false, bool $onlineBooking = false, bool $active = true): array|string|null
     {
-        return $this->curlService->get('');
+        $params = [];
+
+        if (! isset($ids)) {
+            throw new InvalidArgumentException('Missing array of ids');
+        }
+
+        $ids = implode(',', $ids);
+        $params['ider'] = $ids;
+
+        if (isset($departmentId)) {
+            $params['afdeling'] = $departmentId;
+        }
+
+        if (isset($type)) {
+            // The list of accepted types
+            $acceptedTypes = ['hold', 'udvalg'];
+
+            // Check if $type is not in the accepted types
+            if (! in_array($type, $acceptedTypes, true)) {
+                throw new InvalidArgumentException('Only "hold" or "udvalg" is accepted');
+            }
+            $params['type'] = $type;
+
+        }
+
+        if (isset($activities)) {
+            $activities = implode(',', $activities);
+            $params['aktiviteter'] = $activities;
+        }
+
+        $params['offentlig'] = $public;
+
+        $params['vis_medlemsliste'] = $showMemberlist;
+
+        $params['online_tilmelding'] = $onlineBooking;
+
+        $params['aktiv'] = $active;
+
+        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php', $params);
     }
 
-    public function getGroupsTimeAndPlace()
+    /**
+     * getGroupsTimeAndPlace
+     *
+     * @return array
+     */
+    public function getGroupsTimeAndPlace(array $ids = []): array|string|null
     {
-        return $this->curlService->get('');
+        if (! isset($ids)) {
+            throw new InvalidArgumentException('Missing a list of groups');
+        }
+        $ids = implode(',', $ids);
+
+        return $this->curlService->get('dataudv/api/adressebog/get_tid_sted.php', ['grupper' => $ids]);
     }
 
-    public function getGroupsMember()
+    /**
+     * getGroupsMember
+     *
+     * @return array
+     */
+    public function getGroupsMember(array $ids, string $type, bool $confirmation = false, bool $deleted = false, bool $extraFields = false): array|string|null
     {
-        return $this->curlService->get('');
+        $params = [];
+
+        if (! isset($ids)) {
+            throw new InvalidArgumentException('Missing a list of groups');
+        }
+        $params['ider'] = implode(',', $ids);
+
+        if (isset($type)) {
+            // The list of accepted types
+            $acceptedTypes = ['person', 'medlem', 'virksomhed'];
+
+            // Check if $type is not in the accepted types
+            if (! in_array($type, $acceptedTypes, true)) {
+                throw new InvalidArgumentException('Only "person", "medlem", or "virksomhed" is accepted');
+            }
+            $params['type'] = $type;
+
+        }
+
+        $params['Mangler_bekraeftelse'] = $confirmation;
+
+        $params['slettet'] = $deleted;
+
+        $params['ekstra_felter'] = $extraFields;
+
+        return $this->curlService->get('dataudv/api/adressebog/get_grupper.php', $params);
     }
 }

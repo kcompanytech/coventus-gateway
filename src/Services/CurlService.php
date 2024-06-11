@@ -4,11 +4,11 @@ namespace Kcompany\CoventusGateway\Services;
 
 class CurlService
 {
-    private $baseUrl;
+    private string $baseUrl;
 
-    private $clientId;
+    private string $clientId;
 
-    private $apiKey;
+    private string $apiKey;
 
     public function __construct()
     {
@@ -17,7 +17,10 @@ class CurlService
         $this->apiKey = config('coventus-gateway.coventus.api_key');
     }
 
-    private function buildUrl($endpoint, $params = [])
+    /**
+     * Build http url query and sets default parameters
+     */
+    private function buildUrl(string $endpoint, array $params = []): string
     {
         // Default parameters to include in every request
         $defaultParams = [
@@ -36,7 +39,10 @@ class CurlService
         return $url;
     }
 
-    private function executeCurl($endpoint, $method, $data = [], $params = [])
+    /**
+     * Execute curl
+     */
+    private function executeCurl(string $endpoint, string $method, array $data = [], array $params = []): array|string|null
     {
         $url = $this->buildUrl($endpoint, $params);
         $ch = curl_init();
@@ -81,22 +87,34 @@ class CurlService
         return json_decode($result, true);
     }
 
-    public function get($endpoint, $params = [])
+    /**
+     * Uses get method
+     */
+    public function get(string $endpoint, array $params = []): array|string|null
     {
         return $this->executeCurl($endpoint, 'GET', [], $params);
     }
 
-    public function post($endpoint, $data = [], $params = [])
+    /**
+     * Uses post method
+     */
+    public function post(string $endpoint, array $data = [], array $params = []): array|string|null
     {
         return $this->executeCurl($endpoint, 'POST', $data, $params);
     }
 
-    public function put($endpoint, $data = [], $params = [])
+    /**
+     * Uses put method
+     */
+    public function put(string $endpoint, array $data = [], array $params = []): array|string|null
     {
         return $this->executeCurl($endpoint, 'PUT', $data, $params);
     }
 
-    public function delete($endpoint, $data = [], $params = [])
+    /**
+     * Uses delete method
+     */
+    public function delete(string $endpoint, array $data = [], array $params = []): array|string|null
     {
         return $this->executeCurl($endpoint, 'DELETE', $data, $params);
     }
