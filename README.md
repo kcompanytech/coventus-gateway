@@ -5,15 +5,13 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/kcompanytech/coventus-gateway/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/kcompanytech/coventus-gateway/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/kcompanytech/coventus-gateway.svg?style=flat-square)](https://packagist.org/packages/kcompanytech/coventus-gateway)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Api Coventus gateway for Laravel
 
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/coventus-gateway.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/coventus-gateway)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -52,8 +50,34 @@ php artisan vendor:publish --tag="coventus-gateway-views"
 ## Usage
 
 ```php
-$coventusGateway = new Kcompany\CoventusGateway();
-echo $coventusGateway->echoPhrase('Hello, Kcompany!');
+
+class ExampleController extends Controller
+{
+    protected $clientService;
+
+    public function __construct(ClientService $clientService)
+    {
+        $this->clientService = $clientService;
+    }
+
+    public function showBookings()
+    {
+        $from = '2024-06-01'; // Example timestamp
+        $to = '2024-06-07';   // Example timestamp
+        $resource = ['19071','18294']; // Example resource array
+
+        $bookings = $this->clientService->getBookingService()->getBookings($from, $to, $resource);
+        
+        return response()->json($bookings);
+    }
+
+    public function showCategories()
+    {
+        $categories = $this->clientService->getCategoryService()->getCategories();
+        
+        return response()->json($categories);
+    }
+}
 ```
 
 ## Testing
@@ -65,10 +89,6 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
