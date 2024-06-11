@@ -1,17 +1,15 @@
 <?php
 
-use Kcompany\CoventusGateway\Services\{
-    BookingService,
-    CategoryService,
-    ClientService,
-    DepartmentService,
-    FinansService,
-    GroupService,
-    LoginService,
-    MemberService,
-    OrganizationService,
-    ResourceService
-};
+use Kcompany\CoventusGateway\Services\BookingService;
+use Kcompany\CoventusGateway\Services\CategoryService;
+use Kcompany\CoventusGateway\Services\ClientService;
+use Kcompany\CoventusGateway\Services\DepartmentService;
+use Kcompany\CoventusGateway\Services\FinansService;
+use Kcompany\CoventusGateway\Services\GroupService;
+use Kcompany\CoventusGateway\Services\LoginService;
+use Kcompany\CoventusGateway\Services\MemberService;
+use Kcompany\CoventusGateway\Services\OrganizationService;
+use Kcompany\CoventusGateway\Services\ResourceService;
 
 it('can create a ClientService and return the correct services', function () {
     // Mock the services
