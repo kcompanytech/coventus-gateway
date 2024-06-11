@@ -3,7 +3,7 @@
 namespace Kcompany\CoventusGateway\Services;
 
 class ResourceService extends BaseClientService
-{    
+{
     /**
      * getResources
      *

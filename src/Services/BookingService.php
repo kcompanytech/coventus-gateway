@@ -3,13 +3,10 @@
 namespace Kcompany\CoventusGateway\Services;
 
 class BookingService extends BaseClientService
-{    
+{
     /**
      * getBookings
      *
-     * @param  string $from
-     * @param  string $to
-     * @param  array $resource
      * @return array
      */
     public function getBookings(string $from, string $to, array $resource): array|string|null

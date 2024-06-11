@@ -9,11 +9,9 @@ class CoventusGatewayCommand extends Command
     public $signature = 'coventus-gateway';
 
     public $description = 'Test command';
-    
+
     /**
      * handle
-     *
-     * @return int
      */
     public function handle(): int
     {
