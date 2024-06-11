@@ -24,6 +24,7 @@ class LoginService extends BaseClientService
         } else {
             throw new InvalidArgumentException('The input must be a valid email address or an 8-digit phone number.');
         }
+
         return $this->curlService->post('dataudv/api/medlemslogin/login.php', $params);
     }
 }
