@@ -1,10 +1,11 @@
 {
     "name": "kcompanytech/coventus-gateway",
-    "description": "Api gatway for coventus api",
+    "description": "Gateway for coventus api",
     "keywords": [
         "kcompany",
         "laravel",
-        "coventus-gateway"
+        "coventus-gateway",
+        "coventus"
     ],
     "homepage": "https://github.com/kcompanytech/coventus-gateway",
     "license": "MIT",
